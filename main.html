@@ -1,4 +1,6 @@
-<html lang="pt-BR"><head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SCP Foundation — Amnestic Inventory System</title>
@@ -15,799 +17,169 @@
     --accent2: #ff4444;
     --green: #00cc44;
     --yellow: #ccaa00;
-    --blue: #0044cc;
+    --blue: #5599ff;
     --header-height: 56px;
     --font-mono: 'Courier New', Courier, monospace;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-mono);
-    min-height: 100vh;
-  }
-
-  /* ── LOGIN ── */
-  #login-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
-  }
-
-  .login-box {
-    width: 100%;
-    max-width: 420px;
-    border: 1px solid var(--border-bright);
-    background: var(--panel);
-    padding: 32px 28px;
-  }
-
-  .login-logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 28px;
-    gap: 8px;
-  }
-
-  .scp-seal {
-    width: 80px;
-    height: 80px;
-    border: 3px solid var(--accent);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    font-weight: 900;
-    color: var(--accent);
-    letter-spacing: -1px;
-    position: relative;
-  }
-
-  .scp-seal::after {
-    content: '';
-    position: absolute;
-    inset: 4px;
-    border-radius: 50%;
-    border: 1px solid #400;
-  }
-
-  .login-title {
-    font-size: 12px;
-    text-align: center;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
-
-  .login-subtitle {
-    font-size: 16px;
-    color: var(--text-bright);
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    text-align: center;
-  }
-
-  .form-group { margin-bottom: 16px; }
-
-  .form-group label {
-    display: block;
-    font-size: 11px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 6px;
-  }
-
-  .form-group input {
-    width: 100%;
-    background: #050505;
-    border: 1px solid var(--border-bright);
-    color: var(--text-bright);
-    font-family: var(--font-mono);
-    font-size: 14px;
-    padding: 10px 12px;
-    outline: none;
-    transition: border-color 0.15s;
-  }
-
-  .form-group input:focus { border-color: var(--accent); }
-
-  .btn {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    cursor: pointer;
-    transition: background 0.15s;
-    margin-top: 8px;
-  }
-
-  .btn:hover { background: #900; }
-
-  .error-msg {
-    color: var(--accent2);
-    font-size: 12px;
-    margin-top: 10px;
-    text-align: center;
-    min-height: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .login-footer {
-    text-align: center;
-    font-size: 10px;
-    color: #333;
-    margin-top: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  /* ── MAIN APP ── */
-  #app {
-    display: none;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  .header {
-    height: var(--header-height);
-    border-bottom: 1px solid var(--border-bright);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    background: var(--panel);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    gap: 12px;
-  }
-
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .header-scp {
-    font-size: 18px;
-    font-weight: 900;
-    color: var(--accent);
-    white-space: nowrap;
-  }
-
-  .header-title {
-    font-size: 11px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-  }
-
-  .user-badge {
-    font-size: 11px;
-    color: var(--text-dim);
-    border: 1px solid var(--border-bright);
-    padding: 4px 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 120px;
-  }
-
-  .admin-badge { border-color: var(--yellow); color: var(--yellow); }
-
-  .logout-btn {
-    background: none;
-    border: 1px solid var(--border-bright);
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    padding: 4px 8px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .logout-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* Nav tabs */
-  .nav-tabs {
-    display: flex;
-    border-bottom: 1px solid var(--border-bright);
-    background: var(--panel);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .nav-tabs::-webkit-scrollbar { display: none; }
-
-  .nav-tab {
-    padding: 10px 16px;
-    font-size: 11px;
-    color: var(--text-dim);
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    white-space: nowrap;
-    border-bottom: 2px solid transparent;
-    transition: all 0.15s;
-    background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    font-family: var(--font-mono);
-  }
-
-  .nav-tab:hover { color: var(--text-bright); }
-  .nav-tab.active { color: var(--accent2); border-bottom-color: var(--accent); }
-  .nav-tab.locked { color: #333; cursor: not-allowed; }
-  .nav-tab.ennui-tab {
-    color: #ff2200;
-    cursor: pointer;
-    animation: tabPulse 1.8s ease-in-out infinite;
-    border-bottom: 2px solid #ff2200;
-  }
-  .nav-tab.ennui-tab:hover { color: #ff5533; }
-  .nav-tab.ennui-tab.active { color: #ff4400; border-bottom-color: #ff2200; }
-
-  @keyframes tabPulse {
-    0%, 100% { color: #ff2200; border-bottom-color: #ff2200; text-shadow: 0 0 6px #ff2200aa; }
-    50% { color: #ff6644; border-bottom-color: #ff6644; text-shadow: 0 0 14px #ff4400cc; }
-  }
-
-  /* Content */
-  .content {
-    flex: 1;
-    padding: 16px;
-  }
-
-  /* Shelf grid */
-  .shelf-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
-
-  /* Amnestic Card */
-  .amnestic-card {
-    border: 1px solid var(--border-bright);
-    background: var(--panel);
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Class-E card special styling */
-  .amnestic-card.ennui-card {
-    border: 1px solid #ff330055;
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    background: #0d0d0d;
-  }
-
-  .card-class {
-    font-size: 18px;
-    font-weight: 900;
-    letter-spacing: 2px;
-  }
-
-  .card-name {
-    font-size: 10px;
-    color: var(--text-dim);
-    text-align: right;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .shelf-display {
-    padding: 12px;
-    min-height: 110px;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    gap: 4px;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-  }
-
-  .shelf-dividers {
-    position: absolute;
-    bottom: 0;
-    left: 8px;
-    right: 8px;
-    height: 3px;
-    background: #222;
-  }
-
-  .vial {
-    width: 18px;
-    height: 32px;
-    border-radius: 2px 2px 4px 4px;
-    border: 1px solid rgba(255,255,255,0.15);
-    position: relative;
-    cursor: default;
-    transition: transform 0.1s;
-    flex-shrink: 0;
-  }
-
-  .vial:hover { transform: translateY(-2px); }
-
-  .vial::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 8px;
-    height: 5px;
-    background: inherit;
-    border-radius: 1px;
-    border: 1px solid rgba(255,255,255,0.15);
-    border-bottom: none;
-  }
-
-  .empty-shelf {
-    color: #333;
-    font-size: 11px;
-    text-align: center;
-    width: 100%;
-    padding: 16px 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
-
-  .card-footer {
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .stock-info { font-size: 12px; }
-  .stock-count { font-weight: 700; }
-  .stock-ok { color: var(--green); }
-  .stock-warn { color: var(--yellow); }
-  .stock-empty { color: var(--accent2); }
-
-  .take-controls {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-  }
-
-  .take-input {
-    width: 48px;
-    background: #050505;
-    border: 1px solid var(--border-bright);
-    color: var(--text-bright);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    padding: 4px 6px;
-    text-align: center;
-    outline: none;
-  }
-
-  .take-btn {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    padding: 5px 8px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .take-btn:hover { background: #900; }
-  .take-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
-
-  .card-desc {
-    padding: 8px 12px;
-    font-size: 11px;
-    color: var(--text-dim);
-    border-bottom: 1px solid var(--border);
-    line-height: 1.6;
-  }
-
-  /* ── ENNUI PROTOCOL TAB CONTENT ── */
-  #content-ennui {
-    display: none;
-  }
-
-  .ennui-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - 120px);
-    padding: 24px 16px;
-  }
-
-  /* Step: gate (questions) */
-  .ennui-gate {
-    width: 100%;
-    max-width: 520px;
-    border: 2px solid #ff2200;
-    background: #080000;
-    padding: 32px 28px;
-    position: relative;
-    box-shadow: 0 0 40px #ff220044, 0 0 80px #ff110022;
-    animation: ennuiBorderPulse 1.6s ease-in-out infinite;
-  }
-
-  @keyframes ennuiBorderPulse {
-    0%, 100% { box-shadow: 0 0 20px #ff220066, 0 0 60px #ff110033, inset 0 0 20px #1a000088; border-color: #ff2200; }
-    50% { box-shadow: 0 0 50px #ff3300aa, 0 0 100px #ff220055, inset 0 0 40px #2a000099; border-color: #ff5533; }
-  }
-
-  .ennui-gate-corner {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    border-color: #ff4400;
-    border-style: solid;
-  }
-  .ennui-gate-corner.tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; }
-  .ennui-gate-corner.tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; }
-  .ennui-gate-corner.bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; }
-  .ennui-gate-corner.br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; }
-
-  .ennui-gate-header {
-    text-align: center;
-    margin-bottom: 28px;
-  }
-
-  .ennui-warning-icon {
-    font-size: 40px;
-    display: block;
-    margin-bottom: 8px;
-    animation: iconFlicker 2.5s step-end infinite;
-  }
-
-  @keyframes iconFlicker {
-    0%, 95%, 100% { opacity: 1; }
-    96% { opacity: 0.3; }
-    97% { opacity: 1; }
-    98% { opacity: 0.1; }
-    99% { opacity: 1; }
-  }
-
-  .ennui-gate-title {
-    font-size: 14px;
-    font-weight: 900;
-    color: #ff3300;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    text-shadow: 0 0 12px #ff330099;
-  }
-
-  .ennui-gate-sub {
-    font-size: 10px;
-    color: #662200;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-top: 6px;
-  }
-
-  .ennui-question-block {
-    margin-bottom: 18px;
-  }
-
-  .ennui-question-block label {
-    display: block;
-    font-size: 10px;
-    color: #883300;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 6px;
-  }
-
-  .ennui-question-block label span {
-    color: #ff4400;
-    margin-right: 4px;
-  }
-
-  .ennui-input {
-    width: 100%;
-    background: #0d0000;
-    border: 1px solid #440000;
-    border-top-color: #661100;
-    color: #ff9966;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    padding: 10px 12px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .ennui-input:focus {
-    border-color: #ff2200;
-    box-shadow: 0 0 12px #ff220033;
-  }
-
-  .ennui-input::placeholder { color: #441100; }
-
-  .ennui-submit-btn {
-    width: 100%;
-    padding: 16px;
-    background: #1a0000;
-    border: 2px solid #ff2200;
-    color: #ff3300;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: all 0.2s;
-    box-shadow: 0 0 16px #ff220033;
-    animation: btnGlow 1.8s ease-in-out infinite;
-  }
-
-  @keyframes btnGlow {
-    0%, 100% { box-shadow: 0 0 16px #ff220033; }
-    50% { box-shadow: 0 0 30px #ff220066, inset 0 0 16px #2a000044; }
-  }
-
-  .ennui-submit-btn:hover {
-    background: #2a0000;
-    color: #ff6644;
-    box-shadow: 0 0 40px #ff330077;
-  }
-
-  .ennui-error {
-    color: #ff4444;
-    font-size: 11px;
-    text-align: center;
-    margin-top: 10px;
-    min-height: 16px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
-
-  /* Ennui box: the actual content shown after unlocking */
-  .ennui-box {
-    width: 100%;
-    max-width: 760px;
-    border: 2px solid #ff2200;
-    background: #060000;
-    padding: 24px;
-    box-shadow: 0 0 60px #ff220055, 0 0 120px #ff110033;
-    animation: ennuiBorderPulse 1.6s ease-in-out infinite;
-    position: relative;
-  }
-
-  .ennui-box-corner {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    border-color: #ff4400;
-    border-style: solid;
-  }
-  .ennui-box-corner.tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; }
-  .ennui-box-corner.tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; }
-  .ennui-box-corner.bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; }
-  .ennui-box-corner.br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; }
-
-  .ennui-box-header {
-    text-align: center;
-    margin-bottom: 20px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #330000;
-  }
-
-  .ennui-box-title {
-    font-size: 16px;
-    font-weight: 900;
-    color: #ff3300;
-    text-transform: uppercase;
-    letter-spacing: 6px;
-    text-shadow: 0 0 20px #ff330088;
-  }
-
-  .ennui-box-sub {
-    font-size: 10px;
-    color: #551100;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-
-  .ennui-access-info {
-    font-size: 10px;
-    color: #883322;
-    text-align: center;
-    margin-bottom: 16px;
-    padding: 6px;
-    border: 1px solid #330000;
-    background: #0a0000;
-    letter-spacing: 1px;
-  }
-
-  /* Admin panel */
-  .admin-panel { display: none; }
-
-  .admin-section { margin-bottom: 24px; }
-
-  .section-title {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--yellow);
-    border-bottom: 1px solid #333;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
-  }
-
-  .restock-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 10px;
-  }
-
-  .restock-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid var(--border-bright);
-    padding: 8px 10px;
-    background: var(--panel);
-  }
-
-  .restock-label { flex: 1; font-size: 12px; }
-  .restock-label span { display: block; font-size: 10px; color: var(--text-dim); margin-top: 2px; }
-
-  .restock-input {
-    width: 56px;
-    background: #050505;
-    border: 1px solid var(--border-bright);
-    color: var(--text-bright);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    padding: 4px 6px;
-    text-align: center;
-    outline: none;
-  }
-
-  .restock-btn {
-    background: #004400;
-    border: 1px solid var(--green);
-    color: var(--green);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    padding: 4px 8px;
-    cursor: pointer;
-    text-transform: uppercase;
-  }
-
-  .restock-btn:hover { background: #006600; }
-
-  .log-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-  }
-
-  .log-table th {
-    text-align: left;
-    padding: 6px 10px;
-    border-bottom: 1px solid var(--border-bright);
-    color: var(--text-dim);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background: #0d0d0d;
-  }
-
-  .log-table td {
-    padding: 6px 10px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-  }
-
-  .log-table tr:hover td { background: #0a0a0a; }
-
-  .log-enter { color: var(--green); }
-  .log-take { color: #5599ff; }
-  .log-fail { color: var(--accent2); }
-  .log-admin { color: var(--yellow); }
-
-  .log-time {
-    color: var(--text-dim);
-    white-space: nowrap;
-    font-size: 10px;
-  }
-
-  #toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: #111;
-    border: 1px solid var(--border-bright);
-    color: var(--text-bright);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    padding: 10px 16px;
-    text-align: center;
-    opacity: 0;
-    transition: all 0.25s;
-    pointer-events: none;
-    z-index: 9999;
-    max-width: 300px;
-    white-space: pre-wrap;
-  }
-
-  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  #toast.toast-ok { border-color: var(--green); }
-  #toast.toast-err { border-color: var(--accent2); }
-  #toast.toast-warn { border-color: var(--yellow); }
-
-  .log-wrapper { overflow-x: auto; }
-  .log-table { min-width: 480px; }
-
-  .clear-btn {
-    background: none;
-    border: 1px solid #444;
-    color: #666;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    padding: 3px 8px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    float: right;
-    margin-top: -28px;
-  }
-
-  .clear-btn:hover { border-color: var(--accent2); color: var(--accent2); }
-
-  @media (max-width: 480px) {
-    .header-title { display: none; }
-    .shelf-grid { grid-template-columns: 1fr; }
-    .restock-grid { grid-template-columns: 1fr; }
-    .content { padding: 10px; }
-  }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-mono); min-height: 100vh; }
+
+  /* LOGIN */
+  #login-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:20px; }
+  .login-box { width:100%; max-width:420px; border:1px solid var(--border-bright); background:var(--panel); padding:32px 28px; }
+  .login-logo { display:flex; flex-direction:column; align-items:center; margin-bottom:28px; gap:8px; }
+  .scp-seal { width:80px; height:80px; border:3px solid var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:900; color:var(--accent); letter-spacing:-1px; position:relative; }
+  .scp-seal::after { content:''; position:absolute; inset:4px; border-radius:50%; border:1px solid #400; }
+  .login-title { font-size:12px; text-align:center; color:var(--text-dim); text-transform:uppercase; letter-spacing:2px; }
+  .login-subtitle { font-size:16px; color:var(--text-bright); text-transform:uppercase; letter-spacing:4px; text-align:center; }
+  .form-group { margin-bottom:16px; }
+  .form-group label { display:block; font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:2px; margin-bottom:6px; }
+  .form-group input { width:100%; background:#050505; border:1px solid var(--border-bright); color:var(--text-bright); font-family:var(--font-mono); font-size:14px; padding:10px 12px; outline:none; transition:border-color .15s; }
+  .form-group input:focus { border-color:var(--accent); }
+  .btn { display:block; width:100%; padding:12px; background:var(--accent); color:#fff; border:none; font-family:var(--font-mono); font-size:13px; text-transform:uppercase; letter-spacing:3px; cursor:pointer; transition:background .15s; margin-top:8px; }
+  .btn:hover { background:#900; }
+  .error-msg { color:var(--accent2); font-size:12px; margin-top:10px; text-align:center; min-height:18px; text-transform:uppercase; letter-spacing:1px; }
+  .login-footer { text-align:center; font-size:10px; color:#333; margin-top:12px; text-transform:uppercase; letter-spacing:1px; }
+
+  /* APP */
+  #app { display:none; flex-direction:column; min-height:100vh; }
+  .header { height:var(--header-height); border-bottom:1px solid var(--border-bright); display:flex; align-items:center; justify-content:space-between; padding:0 16px; background:var(--panel); position:sticky; top:0; z-index:100; gap:12px; }
+  .header-left { display:flex; align-items:center; gap:10px; flex:1; min-width:0; }
+  .header-scp { font-size:18px; font-weight:900; color:var(--accent); white-space:nowrap; }
+  .header-title { font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .header-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .user-badge { font-size:11px; color:var(--text-dim); border:1px solid var(--border-bright); padding:4px 8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:130px; }
+  .admin-badge { border-color:var(--yellow); color:var(--yellow); }
+  .logout-btn { background:none; border:1px solid var(--border-bright); color:var(--text-dim); font-family:var(--font-mono); font-size:11px; padding:4px 8px; cursor:pointer; text-transform:uppercase; letter-spacing:1px; }
+  .logout-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+  /* NAV */
+  .nav-tabs { display:flex; border-bottom:1px solid var(--border-bright); background:var(--panel); overflow-x:auto; scrollbar-width:none; }
+  .nav-tabs::-webkit-scrollbar { display:none; }
+  .nav-tab { padding:10px 14px; font-size:11px; color:var(--text-dim); cursor:pointer; text-transform:uppercase; letter-spacing:2px; white-space:nowrap; border-bottom:2px solid transparent; transition:all .15s; background:none; border-top:none; border-left:none; border-right:none; font-family:var(--font-mono); }
+  .nav-tab:hover { color:var(--text-bright); }
+  .nav-tab.active { color:var(--accent2); border-bottom-color:var(--accent); }
+  .nav-tab.ennui-tab { color:#ff2200; animation:tabPulse 1.8s ease-in-out infinite; border-bottom:2px solid #ff2200; }
+  .nav-tab.ennui-tab.active,.nav-tab.ennui-tab:hover { color:#ff6644; }
+  .nav-tab.mnestic-tab { color:#4488ff; border-bottom:2px solid #224488; animation:mnesticPulse 2.5s ease-in-out infinite; }
+  .nav-tab.mnestic-tab.active,.nav-tab.mnestic-tab:hover { color:#88bbff; }
+  @keyframes tabPulse { 0%,100%{color:#ff2200;border-bottom-color:#ff2200;text-shadow:0 0 6px #ff2200aa} 50%{color:#ff5533;border-bottom-color:#ff5533;text-shadow:0 0 14px #ff4400cc} }
+  @keyframes mnesticPulse { 0%,100%{text-shadow:0 0 4px #4488ff55} 50%{text-shadow:0 0 10px #4488ffaa} }
+
+  /* SYNC STATUS */
+  #sync-status { font-size:10px; color:#333; text-align:right; padding:4px 16px 0; text-transform:uppercase; letter-spacing:1px; min-height:18px; }
+  #sync-status.synced { color:var(--green); }
+  #sync-status.syncing { color:var(--yellow); }
+  #sync-status.error { color:var(--accent2); }
+
+  /* CONTENT */
+  .content { flex:1; padding:16px; }
+  .section-header { font-size:11px; text-transform:uppercase; letter-spacing:3px; color:var(--text-dim); border-bottom:1px solid var(--border-bright); padding-bottom:8px; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .section-header .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .shelf-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-bottom:24px; }
+
+  /* CARDS */
+  .amnestic-card { border:1px solid var(--border-bright); background:var(--panel); display:flex; flex-direction:column; }
+  .amnestic-card.ennui-card { border-color:#ff330055; box-shadow:0 0 12px #ff110022; }
+  .amnestic-card.mnestic-card { border-color:#224488; box-shadow:0 0 10px #002244; }
+  .amnestic-card.fatal-card { border-color:#990000; box-shadow:0 0 16px #44000044; }
+  .card-header { display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-bottom:1px solid var(--border); background:#0d0d0d; }
+  .card-class { font-size:18px; font-weight:900; letter-spacing:2px; }
+  .card-name { font-size:10px; color:var(--text-dim); text-align:right; text-transform:uppercase; letter-spacing:1px; }
+  .shelf-display { padding:12px; min-height:100px; display:flex; flex-wrap:wrap; align-content:flex-start; gap:4px; border-bottom:1px solid var(--border); position:relative; }
+  .shelf-dividers { position:absolute; bottom:0; left:8px; right:8px; height:3px; background:#222; }
+  .vial { width:18px; height:32px; border-radius:2px 2px 4px 4px; border:1px solid rgba(255,255,255,.15); position:relative; cursor:default; transition:transform .1s; flex-shrink:0; }
+  .vial:hover { transform:translateY(-2px); }
+  .vial::before { content:''; position:absolute; top:-4px; left:50%; transform:translateX(-50%); width:8px; height:5px; background:inherit; border-radius:1px; border:1px solid rgba(255,255,255,.15); border-bottom:none; }
+  .empty-shelf { color:#333; font-size:11px; text-align:center; width:100%; padding:16px 0; text-transform:uppercase; letter-spacing:2px; }
+  .card-footer { padding:8px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+  .stock-info { font-size:12px; }
+  .stock-count { font-weight:700; }
+  .stock-ok { color:var(--green); }
+  .stock-warn { color:var(--yellow); }
+  .stock-empty { color:var(--accent2); }
+  .take-controls { display:flex; gap:4px; align-items:center; }
+  .take-input { width:48px; background:#050505; border:1px solid var(--border-bright); color:var(--text-bright); font-family:var(--font-mono); font-size:12px; padding:4px 6px; text-align:center; outline:none; }
+  .take-btn { background:var(--accent); color:#fff; border:none; font-family:var(--font-mono); font-size:11px; padding:5px 8px; cursor:pointer; text-transform:uppercase; letter-spacing:1px; position:relative; overflow:hidden; min-width:82px; text-align:center; }
+  .take-btn:hover:not(:disabled) { background:#900; }
+  .take-btn:disabled { background:#1a1a1a; color:#555; cursor:not-allowed; }
+  .take-btn.on-cooldown { background:#1a0000!important; color:var(--accent2)!important; cursor:not-allowed; }
+  .cooldown-bar { position:absolute; bottom:0; left:0; height:3px; background:var(--accent2); }
+  .card-desc { padding:8px 12px; font-size:11px; color:var(--text-dim); border-bottom:1px solid var(--border); line-height:1.6; }
+
+  /* MNESTIC GATE */
+  .gate-wrap { display:flex; align-items:center; justify-content:center; min-height:calc(100vh - 140px); }
+  .mnestic-gate { width:100%; max-width:460px; border:1px solid #224488; background:#000a18; padding:28px 24px; box-shadow:0 0 30px #002244; }
+  .mnestic-gate-header { text-align:center; margin-bottom:22px; }
+  .mnestic-gate-header .icon { font-size:32px; margin-bottom:8px; display:block; }
+  .mnestic-gate-header h2 { color:#4488ff; font-size:13px; text-transform:uppercase; letter-spacing:4px; }
+  .mnestic-gate-header p { color:#224466; font-size:10px; letter-spacing:2px; text-transform:uppercase; margin-top:4px; }
+  .mnestic-input { width:100%; background:#000811; border:1px solid #224488; color:#88bbff; font-family:var(--font-mono); font-size:13px; padding:10px 12px; outline:none; margin-bottom:12px; }
+  .mnestic-input:focus { border-color:#4488ff; }
+  .mnestic-submit-btn { width:100%; padding:12px; background:#001133; border:1px solid #4488ff; color:#4488ff; font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:3px; cursor:pointer; }
+  .mnestic-submit-btn:hover { background:#002255; }
+  .mnestic-error { color:var(--accent2); font-size:11px; text-align:center; margin-top:8px; text-transform:uppercase; letter-spacing:1px; }
+
+  /* ENNUI TAB */
+  .ennui-wrapper { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:calc(100vh - 140px); padding:24px 16px; }
+  .ennui-no-access { text-align:center; border:1px solid #330000; background:#060000; padding:40px 32px; max-width:420px; }
+  .ennui-no-access .icon { font-size:36px; margin-bottom:12px; }
+  .ennui-no-access h2 { color:#661100; font-size:13px; text-transform:uppercase; letter-spacing:4px; margin-bottom:8px; }
+  .ennui-no-access p { color:#441100; font-size:11px; letter-spacing:1px; line-height:1.8; }
+
+  .ennui-protocol-box { width:100%; max-width:540px; border:2px solid #ff2200; background:#060000; padding:40px 32px; display:flex; flex-direction:column; align-items:center; gap:24px; animation:ennuiBorderPulse 1.6s ease-in-out infinite; position:relative; text-align:center; }
+  @keyframes ennuiBorderPulse { 0%,100%{box-shadow:0 0 20px #ff220055,0 0 60px #ff110022;border-color:#ff2200} 50%{box-shadow:0 0 50px #ff3300aa,0 0 100px #ff220044;border-color:#ff5533} }
+  .ennui-corner { position:absolute; width:16px; height:16px; border-color:#ff4400; border-style:solid; }
+  .ennui-corner.tl{top:-2px;left:-2px;border-width:3px 0 0 3px} .ennui-corner.tr{top:-2px;right:-2px;border-width:3px 3px 0 0}
+  .ennui-corner.bl{bottom:-2px;left:-2px;border-width:0 0 3px 3px} .ennui-corner.br{bottom:-2px;right:-2px;border-width:0 3px 3px 0}
+  .ennui-protocol-box h2 { color:#ff3300; font-size:14px; text-transform:uppercase; letter-spacing:6px; text-shadow:0 0 20px #ff330066; }
+  .ennui-protocol-box .sub { color:#661100; font-size:10px; letter-spacing:3px; text-transform:uppercase; }
+  .ennui-warning-txt { color:#883322; font-size:11px; line-height:1.8; border:1px solid #330000; background:#0a0000; padding:12px 16px; width:100%; text-align:left; }
+  .ennui-warning-txt span { color:#ff4400; }
+
+  .ennui-activate-btn { width:180px; height:180px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#330000,#0d0000); border:4px solid #ff2200; color:#ff3300; font-family:var(--font-mono); font-size:15px; font-weight:900; text-transform:uppercase; letter-spacing:4px; cursor:pointer; transition:all .2s; animation:bigBtnPulse 2s ease-in-out infinite; position:relative; line-height:1.4; }
+  @keyframes bigBtnPulse { 0%,100%{box-shadow:0 0 30px #ff220055,inset 0 0 20px #1a000044} 50%{box-shadow:0 0 60px #ff3300aa,inset 0 0 40px #2a000066} }
+  .ennui-activate-btn:hover:not(:disabled) { background:radial-gradient(circle at 35% 35%,#550000,#1a0000); color:#ff6644; box-shadow:0 0 80px #ff440099,inset 0 0 40px #33000066; transform:scale(1.04); }
+  .ennui-activate-btn:disabled { cursor:not-allowed; opacity:.4; animation:none; }
+
+  /* BLACKOUT */
+  #blackout { position:fixed; inset:0; background:#000; z-index:9999; display:none; }
+  #blackout.active { display:block; }
+
+  /* ADMIN */
+  .admin-section { margin-bottom:28px; }
+  .section-title { font-size:12px; text-transform:uppercase; letter-spacing:3px; color:var(--yellow); border-bottom:1px solid #333; padding-bottom:8px; margin-bottom:12px; }
+  .restock-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:10px; }
+  .restock-row { display:flex; align-items:center; gap:8px; border:1px solid var(--border-bright); padding:8px 10px; background:var(--panel); }
+  .restock-label { flex:1; font-size:12px; }
+  .restock-label span { display:block; font-size:10px; color:var(--text-dim); margin-top:2px; }
+  .restock-input { width:56px; background:#050505; border:1px solid var(--border-bright); color:var(--text-bright); font-family:var(--font-mono); font-size:12px; padding:4px 6px; text-align:center; outline:none; }
+  .restock-btn { background:#004400; border:1px solid var(--green); color:var(--green); font-family:var(--font-mono); font-size:11px; padding:4px 8px; cursor:pointer; text-transform:uppercase; }
+  .restock-btn:hover { background:#006600; }
+
+  /* LOG */
+  .log-wrapper { overflow-x:auto; }
+  .log-table { width:100%; border-collapse:collapse; font-size:12px; min-width:480px; }
+  .log-table th { text-align:left; padding:6px 10px; border-bottom:1px solid var(--border-bright); color:var(--text-dim); font-size:10px; text-transform:uppercase; letter-spacing:2px; background:#0d0d0d; }
+  .log-table td { padding:6px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+  .log-table tr:hover td { background:#0a0a0a; }
+  .log-enter{color:var(--green)} .log-take{color:var(--blue)} .log-fail{color:var(--accent2)} .log-admin{color:var(--yellow)} .log-ennui{color:#ff6600}
+  .log-time { color:var(--text-dim); white-space:nowrap; font-size:10px; }
+  .clear-btn { background:none; border:1px solid #444; color:#666; font-family:var(--font-mono); font-size:10px; padding:3px 8px; cursor:pointer; text-transform:uppercase; letter-spacing:1px; float:right; margin-top:-28px; }
+  .clear-btn:hover { border-color:var(--accent2); color:var(--accent2); }
+
+  /* TOAST */
+  #toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(20px); background:#111; border:1px solid var(--border-bright); color:var(--text-bright); font-family:var(--font-mono); font-size:12px; padding:10px 16px; text-align:center; opacity:0; transition:all .25s; pointer-events:none; z-index:9998; max-width:320px; white-space:pre-wrap; }
+  #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+  #toast.toast-ok{border-color:var(--green)} #toast.toast-err{border-color:var(--accent2)} #toast.toast-warn{border-color:var(--yellow)}
+
+  @keyframes iconFlicker { 0%,92%,100%{opacity:1} 93%{opacity:.2} 94%{opacity:1} 96%{opacity:.1} 97%{opacity:1} }
+
+  @media(max-width:480px){.header-title{display:none}.shelf-grid{grid-template-columns:1fr}.restock-grid{grid-template-columns:1fr}.content{padding:10px}}
 </style>
 </head>
 <body>
 
-<!-- =================== LOGIN SCREEN =================== -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">
@@ -829,7 +201,6 @@
   </div>
 </div>
 
-<!-- =================== MAIN APP =================== -->
 <div id="app">
   <div class="header">
     <div class="header-left">
@@ -841,560 +212,579 @@
       <button class="logout-btn" onclick="doLogout()">Sair</button>
     </div>
   </div>
-
-  <div class="nav-tabs" id="nav-tabs">
+  <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('inventory')" id="tab-inventory">Estoque</button>
-    <button class="nav-tab ennui-tab" id="tab-ennui" onclick="openEnnuiTab()">⚠ PROTOCOLO ENNUI ⚠</button>
+    <button class="nav-tab mnestic-tab" onclick="openMnesticTab()" id="tab-mnestic">⬡ Mnésticos</button>
+    <button class="nav-tab ennui-tab" onclick="openEnnuiTab()" id="tab-ennui">⚠ PROTOCOLO ENNUI ⚠</button>
     <button class="nav-tab" id="tab-admin" onclick="switchTab('admin')" style="display:none">⚙ Admin</button>
   </div>
+  <div id="sync-status"></div>
 
   <div class="content" id="content-inventory">
+    <div class="section-header"><div class="dot" style="background:#b30000"></div>Amnésticos — Estoque Geral</div>
     <div class="shelf-grid" id="shelf-grid"></div>
   </div>
 
-  <div class="content admin-panel" id="content-admin">
+  <div class="content" id="content-mnestic-gate" style="display:none">
+    <div class="gate-wrap">
+      <div class="mnestic-gate">
+        <div class="mnestic-gate-header">
+          <span class="icon">⬡</span>
+          <h2>Agentes Mnésticos</h2>
+          <p>Divisão Antimemética · Acesso Restrito</p>
+        </div>
+        <label style="display:block;font-size:10px;color:#224466;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px">Senha de Acesso Mnéstico</label>
+        <input class="mnestic-input" type="password" id="mnestic-pass" placeholder="••••••••••••">
+        <button class="mnestic-submit-btn" onclick="submitMnesticGate()">ACESSAR INVENTÁRIO MNÉSTICO</button>
+        <div class="mnestic-error" id="mnestic-error"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content" id="content-mnestic" style="display:none">
+    <div class="section-header"><div class="dot" style="background:#4488ff"></div>Agentes Mnésticos — Divisão Antimemética</div>
+    <div class="shelf-grid" id="shelf-grid-mnestic"></div>
+  </div>
+
+  <div class="content" id="content-ennui" style="display:none">
+    <div class="ennui-wrapper">
+      <div class="ennui-no-access" id="ennui-no-access" style="display:none">
+        <div class="icon">🔒</div>
+        <h2>Acesso Negado</h2>
+        <p>O Protocolo Ennui é de acesso exclusivo para<br>Administradores e membros do Conselho O5.<br><br>Nível de autorização insuficiente.</p>
+      </div>
+      <div class="ennui-protocol-box" id="ennui-protocol-box" style="display:none">
+        <div class="ennui-corner tl"></div><div class="ennui-corner tr"></div>
+        <div class="ennui-corner bl"></div><div class="ennui-corner br"></div>
+        <div>
+          <div style="font-size:40px;animation:iconFlicker 3s step-end infinite">⚠</div>
+          <h2>Protocolo Ennui</h2>
+          <div class="sub" style="margin-top:6px">Classe-E · Autorização O5 · Nível 5</div>
+        </div>
+        <div class="ennui-warning-txt">
+          <span>⚠ AVISO CRÍTICO:</span> A ativação do Protocolo Ennui disparará transmissão de
+          alerta a todos os agentes de campo durante <span>10 minutos</span> (20 mensagens a cada 30 segundos).
+          O evento será registrado com identificação do operador.
+          Esta ação é <span>irreversível e auditada</span> pelo Conselho O5.
+        </div>
+        <button class="ennui-activate-btn" id="ennui-activate-btn" onclick="activateEnnui()">ATIVAR</button>
+        <div style="font-size:10px;color:#441100;letter-spacing:2px;text-transform:uppercase">
+          Operador autorizado: <span id="ennui-operator" style="color:#883322"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content" id="content-admin" style="display:none">
+
+    <!-- JSONBIN SETUP WIZARD -->
+    <div class="admin-section" id="jsonbin-setup-section">
+      <div class="section-title">🌐 Configuração de Estoque Global (JSONBin.io)</div>
+      <div id="jsonbin-configured-banner" style="display:none;background:#001a00;border:1px solid var(--green);padding:10px 14px;font-size:11px;color:var(--green);letter-spacing:1px;margin-bottom:12px;">
+        ✓ JSONBin configurado — estoque global ativo. Todos os usuários compartilham o mesmo inventário.
+      </div>
+      <div id="jsonbin-setup-box" style="border:1px solid #333;background:#0d0d0d;padding:16px;">
+        <div style="font-size:11px;color:var(--text-dim);line-height:1.9;margin-bottom:14px;">
+          <span style="color:var(--yellow)">POR QUE CONFIGURAR?</span><br>
+          Sem o JSONBin, cada navegador tem seu próprio estoque separado. Com ele, qualquer retirada ou re-estoque feito por qualquer usuário é refletido globalmente em tempo real.<br><br>
+          <span style="color:var(--yellow)">COMO CONFIGURAR (2 minutos):</span><br>
+          <span style="color:#888">1.</span> Acesse <span style="color:#88aaff">https://jsonbin.io</span> → crie conta gratuita (sem cartão de crédito)<br>
+          <span style="color:#888">2.</span> Clique em <span style="color:var(--text-bright)">"Create Bin"</span> → cole exatamente este JSON: <span style="color:var(--green);font-family:var(--font-mono)">{"stock":{}}</span> → salve<br>
+          <span style="color:#888">3.</span> Copie o <span style="color:var(--text-bright)">Bin ID</span> que aparece na URL (ex: <span style="color:#888">664abc123def456</span>)<br>
+          <span style="color:#888">4.</span> No menu lateral, clique em <span style="color:var(--text-bright)">"API Keys"</span> → crie uma nova chave → copie-a<br>
+          <span style="color:#888">5.</span> Cole as duas informações abaixo e clique em Salvar:
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+          <div>
+            <label style="display:block;font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:5px">Bin ID</label>
+            <input id="setup-bin-id" type="text" placeholder="664abc123def456..." style="width:100%;background:#050505;border:1px solid var(--border-bright);color:var(--text-bright);font-family:var(--font-mono);font-size:12px;padding:8px 10px;outline:none;">
+          </div>
+          <div>
+            <label style="display:block;font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:5px">API Key (Master Key)</label>
+            <input id="setup-api-key" type="password" placeholder="$2a$10$..." style="width:100%;background:#050505;border:1px solid var(--border-bright);color:var(--text-bright);font-family:var(--font-mono);font-size:12px;padding:8px 10px;outline:none;">
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <button onclick="saveJsonBinConfig()" style="background:#004400;border:1px solid var(--green);color:var(--green);font-family:var(--font-mono);font-size:11px;padding:7px 14px;cursor:pointer;text-transform:uppercase;letter-spacing:2px;">✓ Salvar e Conectar</button>
+          <button onclick="testJsonBinConfig()" style="background:#111;border:1px solid #444;color:#888;font-family:var(--font-mono);font-size:11px;padding:7px 14px;cursor:pointer;text-transform:uppercase;letter-spacing:2px;">⟳ Testar Conexão</button>
+          <button onclick="clearJsonBinConfig()" style="background:#111;border:1px solid #440000;color:#883333;font-family:var(--font-mono);font-size:11px;padding:7px 14px;cursor:pointer;text-transform:uppercase;letter-spacing:2px;">✕ Remover</button>
+          <span id="setup-status" style="font-size:11px;color:#555;letter-spacing:1px;"></span>
+        </div>
+      </div>
+    </div>
+
     <div class="admin-section">
-      <div class="section-title">Re-estoque de Amnésticos</div>
+      <div class="section-title">Re-estoque — Amnésticos &amp; Mnésticos</div>
       <div class="restock-grid" id="restock-grid"></div>
     </div>
     <div class="admin-section">
-      <div class="section-title">
-        Histórico de Acesso
-        <button class="clear-btn" onclick="clearLog()">Limpar</button>
-      </div>
+      <div class="section-title">Histórico de Acesso<button class="clear-btn" onclick="clearLog()">Limpar</button></div>
       <div class="log-wrapper">
         <table class="log-table">
-          <thead>
-            <tr>
-              <th>Hora</th>
-              <th>Usuário</th>
-              <th>Evento</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Hora</th><th>Usuário</th><th>Evento</th></tr></thead>
           <tbody id="log-body"></tbody>
         </table>
       </div>
     </div>
   </div>
-
-  <!-- ENNUI TAB CONTENT -->
-  <div id="content-ennui">
-    <div class="ennui-wrapper">
-
-      <!-- GATE: shown before unlocking -->
-      <div class="ennui-gate" id="ennui-gate">
-        <div class="ennui-gate-corner tl"></div>
-        <div class="ennui-gate-corner tr"></div>
-        <div class="ennui-gate-corner bl"></div>
-        <div class="ennui-gate-corner br"></div>
-
-        <div class="ennui-gate-header">
-          <span class="ennui-warning-icon">⚠</span>
-          <div class="ennui-gate-title">Protocolo Ennui</div>
-          <div class="ennui-gate-sub">Acesso de Nível 5 Obrigatório — O5 Autorização Requerida</div>
-        </div>
-
-        <div class="ennui-question-block">
-          <label><span>01.</span> Identificação do Personagem</label>
-          <input class="ennui-input" type="text" id="ennui-q1" placeholder="Nome completo / Cargo / ID de pessoal...">
-        </div>
-
-        <div class="ennui-question-block">
-          <label><span>02.</span> Motivo de Acesso ao Protocolo Ennui</label>
-          <input class="ennui-input" type="text" id="ennui-q2" placeholder="Descreva a justificativa operacional...">
-        </div>
-
-        <div class="ennui-question-block">
-          <label><span>03.</span> Código de Autorização Ennui</label>
-          <input class="ennui-input" type="password" id="ennui-q3" placeholder="••••••••••••••••••••••••••••••••••••••••">
-        </div>
-
-        <button class="ennui-submit-btn" onclick="submitEnnuiGate()">
-          ⚠ SOLICITAR ACESSO AO PROTOCOLO ENNUI ⚠
-        </button>
-        <div class="ennui-error" id="ennui-gate-error"></div>
-      </div>
-
-      <!-- BOX: shown after unlocking -->
-      <div class="ennui-box" id="ennui-box" style="display:none">
-        <div class="ennui-box-corner tl"></div>
-        <div class="ennui-box-corner tr"></div>
-        <div class="ennui-box-corner bl"></div>
-        <div class="ennui-box-corner br"></div>
-
-        <div class="ennui-box-header">
-          <div class="ennui-box-title">⚠ Protocolo Ennui — Acesso Concedido ⚠</div>
-          <div class="ennui-box-sub">Classe-E · Amnéstico de Máxima Classificação · Uso Restrito</div>
-        </div>
-
-        <div class="ennui-access-info" id="ennui-access-info"></div>
-
-        <div class="shelf-grid" id="shelf-grid-ennui"></div>
-      </div>
-
-    </div>
-  </div>
 </div>
 
-<!-- Toast -->
+<div id="blackout"></div>
 <div id="toast"></div>
 
 <script>
 // ============================================================
-const DISCORD_WEBHOOK_URL = "SEU_WEBHOOK_DO_DISCORD_AQUI";
+// ⚠️ CONFIGURAÇÃO — edite estas variáveis:
+// ============================================================
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1475898574079529213/OSYboaFzEL-mkq9X8u1Ho7P7nh0vXRq66-YlQbQirOzs0JCdo3CVvdBwQn2qqUVl9xGC";
+// JSONBin: configurado pelo painel Admin dentro do site (sem editar código)
 // ============================================================
 
-const PASS_USER  = "4mn32t1c033#SCP";
-const PASS_ADMIN = "We Must Remember#!";
-const PASS_ENNUI = "REVVUyBOT1MgRVNRVUVDRVUgQVNTSU0gQ09NTyBOw5NTIE8gRVNRVUVDRU1PUw";
+// ── Helpers para ler credenciais do JSONBin salvas pelo painel Admin ──
+function getJsonBinConfig() {
+  try { const c=localStorage.getItem("scp_jsonbin_config"); if(c) return JSON.parse(c); } catch(e){}
+  return { binId:"", apiKey:"" };
+}
 
-const AMNESTICS_REGULAR = [
-  {
-    id: "A",
-    name: "Classe-A",
-    codename: "General Retrograde",
-    color: "#333333",
-    stripe: "#888888",
-    unit: "frascos",
-    defaultStock: 50,
-    desc: "Remove memórias recentes das últimas 5-6 horas. Uso de campo geral. Administrado via spray nasal ou comprimido.",
-    ennui: false,
-    clearance: "Nível 1",
-  },
-  {
-    id: "B",
-    name: "Classe-B",
-    codename: "Progressive Retrograde",
-    color: "#1a2a1a",
-    stripe: "#44aa44",
-    unit: "frascos",
-    defaultStock: 30,
-    desc: "Remove memórias mais antigas progressivamente. Pode atingir décadas com dosagem alta. Administrado via comprimido ou injeção.",
-    ennui: false,
-    clearance: "Nível 1",
-  },
-  {
-    id: "C",
-    name: "Classe-C",
-    codename: "Targeted Retrograde",
-    color: "#1a1a2a",
-    stripe: "#4444cc",
-    unit: "frascos",
-    defaultStock: 20,
-    desc: "Remoção cirurgicamente precisa de memórias específicas, independente de quando foram formadas. Requer equipamento especial. Uso principalmente em instalações.",
-    ennui: false,
-    clearance: "Nível 2",
-  },
-  {
-    id: "D",
-    name: "Classe-D",
-    codename: "Ancient Retrograde",
-    color: "#2a2a00",
-    stripe: "#ccaa00",
-    unit: "frascos",
-    defaultStock: 10,
-    desc: "Apaga memórias mais antigas primeiro. Raramente utilizado. Requer dosagem alta para efeito significativo. Uso de nicho.",
-    ennui: false,
-    clearance: "Nível 2",
-  },
-  {
-    id: "F",
-    name: "Classe-F",
-    codename: "Fugue",
-    color: "#2a001a",
-    stripe: "#cc0066",
-    unit: "frascos",
-    defaultStock: 5,
-    desc: "Apaga e reconstrói a identidade do sujeito. Induz amnésia dissociativa profunda. Uso extremamente restrito. Aprovação O5 necessária.",
-    ennui: false,
-    clearance: "Nível 4",
-  },
-  {
-    id: "G",
-    name: "Classe-G",
-    codename: "Gaslighting",
-    color: "#001a2a",
-    stripe: "#0088cc",
-    unit: "frascos",
-    defaultStock: 15,
-    desc: "Causa o sujeito a duvidar da autenticidade de suas memórias. Derealizando eventos anômalos, fazendo-os parecer sonhos ou alucinações.",
-    ennui: false,
-    clearance: "Nível 3",
-  },
+function saveJsonBinConfig() {
+  const binId  = (document.getElementById("setup-bin-id")||{}).value||"";
+  const apiKey = (document.getElementById("setup-api-key")||{}).value||"";
+  const status = document.getElementById("setup-status");
+  if (!binId.trim() || !apiKey.trim()) { if(status){status.style.color="#ff4444";status.textContent="Preencha os dois campos.";} return; }
+  localStorage.setItem("scp_jsonbin_config", JSON.stringify({ binId:binId.trim(), apiKey:apiKey.trim() }));
+  if(status){status.style.color="var(--yellow)";status.textContent="Testando conexão...";}
+  testJsonBinConfig();
+}
+
+async function testJsonBinConfig() {
+  const { binId:sb, apiKey:sa } = getJsonBinConfig();
+  const bi = ((document.getElementById("setup-bin-id")||{}).value||"").trim() || sb;
+  const ak = ((document.getElementById("setup-api-key")||{}).value||"").trim() || sa;
+  const status = document.getElementById("setup-status");
+  if (!bi || !ak) { if(status){status.style.color="#ff4444";status.textContent="Configure o Bin ID e API Key primeiro.";} return; }
+  if(status){status.style.color="var(--yellow)";status.textContent="⟳ Testando...";}
+  try {
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${bi}/latest`, { headers:{"X-Master-Key":ak} });
+    if (!r.ok) throw new Error("HTTP "+r.status);
+    localStorage.setItem("scp_jsonbin_config", JSON.stringify({ binId:bi, apiKey:ak }));
+    if(status){status.style.color="var(--green)";status.textContent="✓ Conexão bem-sucedida! Estoque global ativo.";}
+    updateJsonBinBanner();
+    loadGlobalStock();
+  } catch(e) {
+    if(status){status.style.color="#ff4444";status.textContent="✕ Falha: verifique Bin ID e API Key. ("+e.message+")";}
+  }
+}
+
+function clearJsonBinConfig() {
+  if (!confirm("Remover configuração do JSONBin? O estoque voltará a ser local.")) return;
+  localStorage.removeItem("scp_jsonbin_config");
+  const bi=document.getElementById("setup-bin-id"); if(bi) bi.value="";
+  const ak=document.getElementById("setup-api-key"); if(ak) ak.value="";
+  const st=document.getElementById("setup-status"); if(st) st.textContent="";
+  updateJsonBinBanner();
+  setSyncStatus("","— Armazenamento local");
+}
+
+function updateJsonBinBanner() {
+  const { binId } = getJsonBinConfig();
+  const b=document.getElementById("jsonbin-configured-banner");
+  if(b) b.style.display = binId ? "block" : "none";
+}
+
+function loadSetupInputs() {
+  const { binId, apiKey } = getJsonBinConfig();
+  const bi=document.getElementById("setup-bin-id"); if(bi&&binId)  bi.value=binId;
+  const ak=document.getElementById("setup-api-key"); if(ak&&apiKey) ak.value=apiKey;
+  updateJsonBinBanner();
+}
+
+const PASS_USER    = "4mn32t1c033#SCP";
+const PASS_ADMIN   = "We Must Remember#!";
+const PASS_MNESTIC = "n3St1C055%SCP";
+
+const AMNESTICS = [
+  { id:"A", name:"Classe-A", codename:"General Retrograde",    color:"#2a2a2a", stripe:"#888888", unit:"frascos", defaultStock:50, clearance:"Nível 1",
+    desc:"Remove memórias recentes das últimas 5-6 horas. Uso de campo geral. Mais eficaz quando o sujeito relembra as memórias alvo durante a administração. Via spray nasal ou comprimido." },
+  { id:"B", name:"Classe-B", codename:"Regressive Retrograde", color:"#1a2a1a", stripe:"#44aa44", unit:"frascos", defaultStock:30, clearance:"Nível 1",
+    desc:"Apagamento lento e incremental de memórias recentes, avançando retroativamente. Dose de 75mg apaga aproximadamente as últimas 24 horas. Via comprimido ou injeção." },
+  { id:"C", name:"Classe-C", codename:"Targeted Retrograde",   color:"#1a1a2a", stripe:"#4444cc", unit:"frascos", defaultStock:20, clearance:"Nível 2",
+    desc:"Remoção cirurgicamente precisa de memórias específicas, independente de quando foram formadas. Requer neuroimagem de alta fidelidade e estimulação transcraniana. Uso em instalações." },
+  { id:"D", name:"Classe-D", codename:"Progressive Retrograde",color:"#2a2a00", stripe:"#ccaa00", unit:"frascos", defaultStock:10, clearance:"Nível 2",
+    desc:"Apaga as memórias mais antigas primeiro, avançando progressivamente. Oposto da Classe-B. Raramente utilizado. Não afeta memórias implícitas (habilidades motoras)." },
+  { id:"E", name:"Classe-E", codename:"Ennui Protocol",        color:"#1a0800", stripe:"#ff6600", unit:"frascos", defaultStock:8,  clearance:"O5 / Nível 5",
+    desc:"⚠ PROTOCOLO ENNUI. Induz complacência psicológica com o anômalo. O sujeito passa a interpretar o sobrenatural como absolutamente normal. Administrado via IV em múltiplas doses. Acesso estritamente restrito.", ennui:true },
+  { id:"F", name:"Classe-F", codename:"Fugue",                 color:"#2a001a", stripe:"#cc0066", unit:"frascos", defaultStock:5,  clearance:"Nível 4",
+    desc:"Induz amnésia dissociativa profunda. O sujeito esquece sua identidade e pode receber uma nova. Utilizado em desligamento de pessoal e liberação de Classe-D. Aprovação O5 necessária." },
+  { id:"G", name:"Classe-G", codename:"Gaslighting",           color:"#001a2a", stripe:"#0088cc", unit:"frascos", defaultStock:15, clearance:"Nível 3",
+    desc:"Causa dúvida sobre a autenticidade de memórias. Derrealiza eventos anômalos, fazendo-os parecer sonhos ou alucinações. Variante de campo mira exclusivamente memórias anômalas." },
+  { id:"H", name:"Classe-H", codename:"Anterograde",           color:"#1a1a00", stripe:"#aaaa00", unit:"frascos", defaultStock:12, clearance:"Nível 2",
+    desc:"Bloqueia a formação de novas memórias enquanto o agente estiver no sistema do sujeito. Dose de 75mg dura cerca de 24h. Não apaga memórias existentes — apenas impede consolidação de novas." },
+  { id:"I", name:"Classe-I", codename:"Transient Retrograde",  color:"#0a1a1a", stripe:"#00aaaa", unit:"frascos", defaultStock:8,  clearance:"Nível 1",
+    desc:"Induz amnésia transitória bloqueando vias neurais de memórias de longo prazo. O sujeito é temporariamente incapaz de recordar o passado. Dose de 75mg dura ~24h. Proteção contra efeitos antimemético." },
 ];
 
-const AMNESTICS_ENNUI = [
-  {
-    id: "E",
-    name: "Classe-E",
-    codename: "Ennui Protocol",
-    color: "#1a0a00",
-    stripe: "#ff6600",
-    unit: "frascos",
-    defaultStock: 8,
-    desc: "⚠ PROTOCOLO ENNUI — Classif. máxima. Induz complacência psicológica com o anômalo. O sujeito interpreta o sobrenatural como normal. Acesso restrito.",
-    ennui: true,
-    clearance: "O5 / Nível 5",
-  },
+const MNESTICS = [
+  { id:"W", name:"Classe-W", codename:"Antimemetic Perception", color:"#001a2a", stripe:"#0088ff", unit:"ampolas", defaultStock:20, clearance:"Div. Antimemética",
+    desc:"Permite perceber e reter conhecimento de antimemes. Inclui aprimoramento geral da memória. Principal droga de campo para agentes da Divisão Antimemética. Efeitos colaterais: náusea, risco aumentado de câncer pancreático, pesadelos." },
+  { id:"X", name:"Classe-X", codename:"Memory Restoration",     color:"#001a1a", stripe:"#00bbaa", unit:"ampolas", defaultStock:10, clearance:"Div. Antimemética",
+    desc:"Restaura consciência de antimemes ou memórias suprimidas. Efeito colateral: a supressão temporal é completamente revertida ('whiplash'), podendo causar danos físicos significativos em doses altas." },
+  { id:"Y", name:"Classe-Y", codename:"Perfect Recall",         color:"#1a001a", stripe:"#9933cc", unit:"ampolas", defaultStock:8,  clearance:"Div. Antimemética",
+    desc:"Concede recall perfeito de todas as memórias adquiridas durante o período de efeito. Efeitos colaterais severos: náusea intensa, risco de câncer pancreático, pesadelos graves e perturbadores." },
+  { id:"Z", name:"Classe-Z", codename:"Total Recall — FATAL",   color:"#220000", stripe:"#ff2200", unit:"ampolas", defaultStock:2,  clearance:"O5 APENAS",
+    desc:"⛔ LETAL. Uma única dose torna o sujeito bioquimicamente incapaz de esquecer qualquer coisa pelo resto de sua vida. Morte por convulsão ocorre invariavelmente em horas. Uso em campo PROIBIDO.", fatal:true },
 ];
 
-const ALL_AMNESTICS = [...AMNESTICS_REGULAR, ...AMNESTICS_ENNUI];
+const ALL_ITEMS = [...AMNESTICS, ...MNESTICS];
 
-let currentUser = null;
-let isAdmin = false;
-let ennuiUnlocked = false;
-let currentTab = "inventory";
-let stock = {};
-let accessLog = [];
+let currentUser = null, isAdmin = false, mnesticUnlocked = false;
+let stock = {}, accessLog = [], cooldowns = {};
+let ennuiAlertInterval = null, ennuiAlertCount = 0;
 
 function initStock() {
-  const saved = localStorage.getItem("scp_stock");
-  if (saved) {
-    stock = JSON.parse(saved);
-    ALL_AMNESTICS.forEach(a => { if (stock[a.id] === undefined) stock[a.id] = a.defaultStock; });
-  } else {
-    ALL_AMNESTICS.forEach(a => { stock[a.id] = a.defaultStock; });
-  }
-  const savedLog = localStorage.getItem("scp_log");
-  if (savedLog) accessLog = JSON.parse(savedLog);
+  ALL_ITEMS.forEach(a => { stock[a.id] = a.defaultStock; });
+  try {
+    const s = localStorage.getItem("scp_stock_v3");
+    if (s) Object.assign(stock, JSON.parse(s));
+    const l = localStorage.getItem("scp_log_v3");
+    if (l) accessLog = JSON.parse(l);
+  } catch(e){}
+  const { binId, apiKey } = getJsonBinConfig();
+  if (binId && apiKey) loadGlobalStock();
 }
 
-function saveStock() {
-  localStorage.setItem("scp_stock", JSON.stringify(stock));
-  localStorage.setItem("scp_log", JSON.stringify(accessLog));
+function setSyncStatus(cls, txt) {
+  const el = document.getElementById("sync-status");
+  if (el) { el.className = cls; el.textContent = txt; }
 }
+
+async function loadGlobalStock() {
+  const { binId, apiKey } = getJsonBinConfig();
+  if (!binId || !apiKey) return;
+  setSyncStatus("syncing", "⟳ Sincronizando...");
+  try {
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+      headers: { "X-Master-Key": apiKey }
+    });
+    if (!r.ok) throw new Error(r.status);
+    const d = await r.json();
+    if (d.record && d.record.stock) {
+      Object.assign(stock, d.record.stock);
+      localStorage.setItem("scp_stock_v3", JSON.stringify(stock));
+      renderAll();
+      renderAdminRestock();
+    }
+    setSyncStatus("synced", "✓ Estoque global sincronizado");
+  } catch(e) {
+    setSyncStatus("error", "⚠ Falha na sincronização global — usando cache local");
+  }
+}
+
+async function saveGlobalStock() {
+  localStorage.setItem("scp_stock_v3", JSON.stringify(stock));
+  const { binId, apiKey } = getJsonBinConfig();
+  if (!binId || !apiKey) { setSyncStatus("", "— Armazenamento local"); return; }
+  setSyncStatus("syncing", "⟳ Salvando...");
+  try {
+    await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", "X-Master-Key": apiKey },
+      body: JSON.stringify({ stock })
+    });
+    setSyncStatus("synced", "✓ Salvo globalmente");
+  } catch(e) { setSyncStatus("error", "⚠ Erro ao salvar globalmente"); }
+}
+
+function saveLocalLog() { localStorage.setItem("scp_log_v3", JSON.stringify(accessLog)); }
 
 async function sendWebhook(message) {
-  if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === "SEU_WEBHOOK_DO_DISCORD_AQUI") return;
+  if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === "https://discord.com/api/webhooks/1475898574079529213/OSYboaFzEL-mkq9X8u1Ho7P7nh0vXRq66-YlQbQirOzs0JCdo3CVvdBwQn2qqUVl9xGC") return;
   try {
-    await fetch(DISCORD_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: message })
-    });
-  } catch(e) { console.warn("Webhook error:", e); }
+    await fetch(DISCORD_WEBHOOK_URL, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ content: message }) });
+  } catch(e){}
 }
 
 function addLog(type, user, detail) {
   const now = new Date();
-  const time = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-  const date = now.toLocaleDateString("pt-BR");
-  accessLog.unshift({ type, user, detail, time: `${date} ${time}` });
+  const ts = now.toLocaleDateString("pt-BR") + " " + now.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+  accessLog.unshift({ type, user, detail, time: ts });
   if (accessLog.length > 300) accessLog.pop();
-  saveStock();
+  saveLocalLog();
   refreshLog();
 }
 
 let toastTimer;
-function showToast(msg, type = "ok") {
+function showToast(msg, type="ok") {
   const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = "show toast-" + type;
+  t.textContent = msg; t.className = "show toast-" + type;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.className = ""; }, 3000);
+  toastTimer = setTimeout(() => { t.className = ""; }, 3500);
 }
 
 // Login
-document.getElementById("login-pass").addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
-document.getElementById("login-user").addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("login-pass").focus(); });
+document.getElementById("login-pass").addEventListener("keydown", e => { if(e.key==="Enter") doLogin(); });
+document.getElementById("login-user").addEventListener("keydown", e => { if(e.key==="Enter") document.getElementById("login-pass").focus(); });
 
 function doLogin() {
   const user = document.getElementById("login-user").value.trim();
   const pass = document.getElementById("login-pass").value;
   const err  = document.getElementById("login-error");
-
   if (!user) { err.textContent = "Informe seu nome de usuário."; return; }
-
   if (pass === PASS_ADMIN) {
-    currentUser = user;
-    isAdmin = true;
-    err.textContent = "";
-    launchApp();
+    currentUser=user; isAdmin=true; err.textContent=""; launchApp();
     sendWebhook(`🔑 **[ADMIN]** \`${user}\` acessou o sistema com credenciais de Administrador.`);
-    addLog("admin", user, "Login com credencial de Administrador");
+    addLog("admin",user,"Login com credencial de Administrador");
   } else if (pass === PASS_USER) {
-    currentUser = user;
-    isAdmin = false;
-    err.textContent = "";
-    launchApp();
+    currentUser=user; isAdmin=false; err.textContent=""; launchApp();
     sendWebhook(`✅ **${user}** entrou no sistema de inventário de Amnésticos.`);
-    addLog("enter", user, "Login bem-sucedido");
+    addLog("enter",user,"Login bem-sucedido");
   } else {
     err.textContent = "Senha inválida. Acesso negado.";
-    sendWebhook(`❌ **${user}** tentou entrar, sem sucesso. (Senha incorreta)`);
-    addLog("fail", user, "Tentativa de login com senha incorreta");
+    sendWebhook(`❌ **${user}** tentou entrar sem sucesso.`);
+    addLog("fail",user||"?","Tentativa de login com senha incorreta");
     document.getElementById("login-pass").value = "";
   }
 }
 
 function doLogout() {
-  currentUser = null;
-  isAdmin = false;
-  ennuiUnlocked = false;
-  document.getElementById("app").style.display = "none";
-  document.getElementById("login-screen").style.display = "flex";
-  document.getElementById("login-user").value = "";
-  document.getElementById("login-pass").value = "";
-  document.getElementById("login-error").textContent = "";
-  // Reset ennui gate
-  resetEnnuiGate();
+  clearEnnuiAlert();
+  currentUser=null; isAdmin=false; mnesticUnlocked=false;
+  document.getElementById("app").style.display="none";
+  document.getElementById("login-screen").style.display="flex";
+  ["login-user","login-pass"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("login-error").textContent="";
+  document.getElementById("mnestic-pass").value="";
+  document.getElementById("mnestic-error").textContent="";
 }
 
 function launchApp() {
-  document.getElementById("login-screen").style.display = "none";
-  const app = document.getElementById("app");
-  app.style.display = "flex";
-
+  document.getElementById("login-screen").style.display="none";
+  document.getElementById("app").style.display="flex";
   const badge = document.getElementById("header-user-badge");
   badge.textContent = isAdmin ? `⚙ ${currentUser}` : currentUser;
-  badge.className = "user-badge" + (isAdmin ? " admin-badge" : "");
-
-  document.getElementById("tab-admin").style.display = isAdmin ? "block" : "none";
-
-  renderShelves();
-  renderAdminRestock();
-  refreshLog();
-  switchTab("inventory");
+  badge.className = "user-badge" + (isAdmin?" admin-badge":"");
+  document.getElementById("tab-admin").style.display = isAdmin?"block":"none";
+  document.getElementById("ennui-operator").textContent = currentUser;
+  renderAll(); renderAdminRestock(); refreshLog(); switchTab("inventory");
+  const _cfg = getJsonBinConfig();
+  if (_cfg.binId && _cfg.apiKey) loadGlobalStock();
+  else setSyncStatus("","— Armazenamento local (configure JSONBin no painel Admin)");
+  if (isAdmin) loadSetupInputs();
 }
 
 function switchTab(tab) {
-  currentTab = tab;
-  document.getElementById("content-inventory").style.display = tab === "inventory" ? "block" : "none";
-  document.getElementById("content-admin").style.display    = tab === "admin"     ? "block" : "none";
-  document.getElementById("content-ennui").style.display    = tab === "ennui"     ? "block" : "none";
+  currentTab=tab;
+  ["inventory","mnestic-gate","mnestic","ennui","admin"].forEach(t=>{
+    const el=document.getElementById("content-"+t); if(el) el.style.display="none";
+  });
+  const el=document.getElementById("content-"+tab);
+  if(el) el.style.display="block";
+  document.querySelectorAll(".nav-tab").forEach(t=>t.classList.remove("active"));
+  const tid = tab==="mnestic-gate"?"mnestic":tab;
+  const tabEl=document.getElementById("tab-"+tid); if(tabEl) tabEl.classList.add("active");
+}
 
-  document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
-  const el = document.getElementById("tab-" + tab);
-  if (el) el.classList.add("active");
+function openMnesticTab() {
+  switchTab(mnesticUnlocked?"mnestic":"mnestic-gate");
+}
+document.getElementById("mnestic-pass").addEventListener("keydown", e=>{ if(e.key==="Enter") submitMnesticGate(); });
+
+function submitMnesticGate() {
+  const pass = document.getElementById("mnestic-pass").value;
+  const err  = document.getElementById("mnestic-error");
+  if(!pass){err.textContent="Informe a senha.";return;}
+  if(pass===PASS_MNESTIC) {
+    mnesticUnlocked=true; err.textContent="";
+    addLog("admin",currentUser,"Acesso aos Agentes Mnésticos desbloqueado");
+    sendWebhook(`⬡ **${currentUser}** acessou o inventário de **Agentes Mnésticos**.`);
+    renderMnesticShelves(); switchTab("mnestic"); showToast("Acesso Mnéstico concedido.","ok");
+  } else {
+    err.textContent="Senha incorreta. Acesso negado.";
+    addLog("fail",currentUser,"Tentativa de acesso a Mnésticos com senha incorreta");
+    document.getElementById("mnestic-pass").value="";
+  }
 }
 
 function openEnnuiTab() {
   switchTab("ennui");
-  // If already unlocked by admin, skip gate
-  if (isAdmin && !ennuiUnlocked) {
-    ennuiUnlocked = true;
-    showEnnuiBox("Admin — Acesso automático por credencial de Administrador", "Acesso via credencial de Administrador");
-  }
+  document.getElementById("ennui-no-access").style.display    = isAdmin ? "none"  : "block";
+  document.getElementById("ennui-protocol-box").style.display = isAdmin ? "flex"  : "none";
 }
 
-function submitEnnuiGate() {
-  const char   = document.getElementById("ennui-q1").value.trim();
-  const reason = document.getElementById("ennui-q2").value.trim();
-  const code   = document.getElementById("ennui-q3").value.trim();
-  const errEl  = document.getElementById("ennui-gate-error");
+// Ennui: big red button
+function activateEnnui() {
+  if(!isAdmin) return;
+  const btn = document.getElementById("ennui-activate-btn");
+  btn.disabled = true;
+  addLog("ennui",currentUser,"⚠ PROTOCOLO ENNUI ATIVADO");
+  sendWebhook(`@everyone\n🟠🟠🟠 **PROTOCOLO ENNUI ATIVADO** 🟠🟠🟠\n⚠ **Operador:** \`${currentUser}\`\n⚠ **Status:** ATIVO — Transmissão de alerta iniciada (10 minutos)\n⚠ Todos os agentes de campo: verifiquem protocolo de resposta antimemética imediatamente.`);
+  ennuiAlertCount=1;
+  ennuiAlertInterval = setInterval(()=>{
+    ennuiAlertCount++;
+    sendWebhook(`🔴 **[ALERTA ENNUI ${ennuiAlertCount}/20]** — Protocolo Ennui **ATIVO**. Operador: \`${currentUser}\` | Todos os agentes de campo devem verificar protocolo de resposta antimemética IMEDIATAMENTE.`);
+    if(ennuiAlertCount>=20) clearEnnuiAlert();
+  }, 30000);
 
-  if (!char)   { errEl.textContent = "Identificação do personagem é obrigatória."; return; }
-  if (!reason) { errEl.textContent = "O motivo de acesso é obrigatório."; return; }
-  if (!code)   { errEl.textContent = "Código de autorização é obrigatório."; return; }
-
-  if (code !== PASS_ENNUI) {
-    errEl.textContent = "Código de autorização inválido. Acesso negado.";
-    sendWebhook(`🔒 **${currentUser}** (Personagem: ${char}) tentou acessar o Protocolo Ennui com código inválido.\nMotivo declarado: ${reason}`);
-    addLog("fail", currentUser, `Tentativa de acesso ao Protocolo Ennui negada (Personagem: ${char})`);
-    document.getElementById("ennui-q3").value = "";
-    return;
-  }
-
-  errEl.textContent = "";
-  ennuiUnlocked = true;
-
-  const infoText = `Acesso concedido a: ${char} | Motivo: ${reason}`;
-  sendWebhook(`🟠 **${currentUser}** (Personagem: **${char}**) acessou o **Protocolo Ennui (Classe-E)**.\nMotivo: ${reason}`);
-  addLog("admin", currentUser, `Acesso ao Protocolo Ennui concedido (Personagem: ${char} | Motivo: ${reason})`);
-  showEnnuiBox(infoText, `Personagem: ${char} | Motivo: ${reason}`);
+  // 15s blackout
+  document.getElementById("blackout").classList.add("active");
+  setTimeout(()=>{
+    document.getElementById("blackout").classList.remove("active");
+    btn.disabled=false;
+  }, 15000);
 }
 
-function showEnnuiBox(infoText, logDetail) {
-  document.getElementById("ennui-gate").style.display = "none";
-  const box = document.getElementById("ennui-box");
-  box.style.display = "block";
-  document.getElementById("ennui-access-info").textContent = infoText;
-  renderEnnuiShelves();
-  showToast("Protocolo Ennui — Acesso Concedido", "warn");
+function clearEnnuiAlert() {
+  if(ennuiAlertInterval){ clearInterval(ennuiAlertInterval); ennuiAlertInterval=null; }
 }
 
-function resetEnnuiGate() {
-  ennuiUnlocked = false;
-  document.getElementById("ennui-gate").style.display = "block";
-  document.getElementById("ennui-box").style.display = "none";
-  document.getElementById("ennui-q1").value = "";
-  document.getElementById("ennui-q2").value = "";
-  document.getElementById("ennui-q3").value = "";
-  document.getElementById("ennui-gate-error").textContent = "";
+// Render
+function renderAll() {
+  renderShelves();
+  if(mnesticUnlocked) renderMnesticShelves();
 }
 
-// Render regular shelves (no Ennui)
 function renderShelves() {
-  document.getElementById("shelf-grid").innerHTML = AMNESTICS_REGULAR.map(a => cardHTML(a)).join("");
+  document.getElementById("shelf-grid").innerHTML = AMNESTICS.map(a=>cardHTML(a,false)).join("");
+}
+function renderMnesticShelves() {
+  document.getElementById("shelf-grid-mnestic").innerHTML = MNESTICS.map(a=>cardHTML(a,true)).join("");
 }
 
-// Render ennui shelf
-function renderEnnuiShelves() {
-  document.getElementById("shelf-grid-ennui").innerHTML = AMNESTICS_ENNUI.map(a => cardHTML(a, true)).join("");
-}
-
-function cardHTML(a, isEnnui = false) {
-  const qty = stock[a.id] ?? 0;
-  const stockClass = qty === 0 ? "stock-empty" : qty <= 5 ? "stock-warn" : "stock-ok";
-  const stockLabel = qty === 0 ? "SEM ESTOQUE" : `${qty} ${a.unit}`;
-
-  const MAX_VIALS = 30;
-  let vialsHTML = "";
-  if (qty === 0) {
-    vialsHTML = `<div class="empty-shelf">— VAZIO —</div>`;
-  } else {
-    const show = Math.min(qty, MAX_VIALS);
-    for (let i = 0; i < show; i++) {
-      vialsHTML += `<div class="vial" style="background:${a.color};border-color:${a.stripe};"></div>`;
-    }
-    if (qty > MAX_VIALS) {
-      vialsHTML += `<div style="font-size:10px;color:#555;align-self:center;padding-left:4px">+${qty - MAX_VIALS} mais</div>`;
-    }
+function cardHTML(a, isMnestic) {
+  const qty = stock[a.id]??0;
+  const sc = qty===0?"stock-empty":qty<=5?"stock-warn":"stock-ok";
+  const sl = qty===0?"SEM ESTOQUE":`${qty} ${a.unit}`;
+  const MAX=30;
+  let vials = "";
+  if(qty===0) { vials=`<div class="empty-shelf">— VAZIO —</div>`; }
+  else {
+    const n=Math.min(qty,MAX);
+    for(let i=0;i<n;i++) vials+=`<div class="vial" style="background:${a.color};border-color:${a.stripe};"></div>`;
+    if(qty>MAX) vials+=`<div style="font-size:10px;color:#555;align-self:center;padding-left:4px">+${qty-MAX} mais</div>`;
   }
-
-  const disabled = qty === 0 ? "disabled" : "";
-  const cardExtra = isEnnui ? ' ennui-card' : '';
-
-  return `
-  <div class="amnestic-card${cardExtra}" id="card-${a.id}">
+  let cls = "";
+  if(a.ennui) cls=" ennui-card";
+  else if(a.fatal) cls=" fatal-card";
+  else if(isMnestic) cls=" mnestic-card";
+  return `<div class="amnestic-card${cls}" id="card-${a.id}">
     <div class="card-header">
       <div class="card-class" style="color:${a.stripe}">${a.name}</div>
       <div class="card-name">${a.codename}<br><small style="color:#444">${a.clearance}</small></div>
     </div>
     <div class="card-desc">${a.desc}</div>
-    <div class="shelf-display" id="shelf-${a.id}">
-      ${vialsHTML}
-      <div class="shelf-dividers"></div>
-    </div>
+    <div class="shelf-display" id="shelf-${a.id}">${vials}<div class="shelf-dividers"></div></div>
     <div class="card-footer">
-      <div class="stock-info">Disponível: <span class="stock-count ${stockClass}">${stockLabel}</span></div>
+      <div class="stock-info">Disponível: <span class="stock-count ${sc}" id="sl-${a.id}">${sl}</span></div>
       <div class="take-controls">
         <input class="take-input" type="number" min="1" max="${qty}" value="1" id="qty-${a.id}">
-        <button class="take-btn" id="btn-${a.id}" ${disabled} onclick="takeItem('${a.id}')">RETIRAR</button>
+        <button class="take-btn" id="btn-${a.id}" ${qty===0?"disabled":""} onclick="takeItem('${a.id}')">RETIRAR<div class="cooldown-bar" id="cd-${a.id}" style="width:0"></div></button>
       </div>
     </div>
   </div>`;
 }
 
+const COOLDOWN_MS = 20000;
+const cdTimers = {};
+
 function takeItem(id) {
-  const a = ALL_AMNESTICS.find(x => x.id === id);
-  const input = document.getElementById("qty-" + id);
-  let qty = parseInt(input.value);
-  if (!qty || qty < 1) { showToast("Quantidade inválida.", "err"); return; }
-  if (qty > stock[id]) { showToast("Estoque insuficiente.", "warn"); return; }
-
-  stock[id] -= qty;
-  saveStock();
-  refreshCard(id);
-
+  const a = ALL_ITEMS.find(x=>x.id===id); if(!a) return;
+  const input = document.getElementById("qty-"+id);
+  const qty = parseInt(input.value);
+  if(!qty||qty<1){showToast("Quantidade inválida.","err");return;}
+  if(qty>(stock[id]??0)){showToast("Estoque insuficiente.","warn");return;}
+  if(cooldowns[id]&&Date.now()<cooldowns[id]){
+    showToast(`Aguarde ${Math.ceil((cooldowns[id]-Date.now())/1000)}s antes de retirar novamente.`,"warn");return;
+  }
+  stock[id]=(stock[id]??0)-qty;
+  saveGlobalStock(); refreshCard(id);
   sendWebhook(`📦 **${currentUser}** retirou **${qty} ${a.unit}** de **${a.name} (${a.codename})**.`);
-  addLog("take", currentUser, `Retirou ${qty} ${a.unit} de ${a.name}`);
-  showToast(`${qty} ${a.unit} de ${a.name} retirado(s).`, "ok");
+  addLog("take",currentUser,`Retirou ${qty} ${a.unit} de ${a.name}`);
+  showToast(`${qty} ${a.unit} de ${a.name} retirado(s).`,"ok");
   renderAdminRestock();
+  // Cooldown
+  cooldowns[id]=Date.now()+COOLDOWN_MS;
+  startCooldownUI(id);
+}
+
+function startCooldownUI(id) {
+  const btn=document.getElementById("btn-"+id);
+  const bar=document.getElementById("cd-"+id);
+  if(!btn||!bar) return;
+  btn.disabled=true; btn.classList.add("on-cooldown"); bar.style.width="100%";
+  const textNode = btn.childNodes[0];
+  if(cdTimers[id]) clearInterval(cdTimers[id]);
+  let elapsed=0;
+  cdTimers[id]=setInterval(()=>{
+    elapsed+=500;
+    const pct=Math.max(0,100-(elapsed/COOLDOWN_MS)*100);
+    bar.style.width=pct+"%";
+    const rem=Math.ceil((COOLDOWN_MS-elapsed)/1000);
+    if(btn.childNodes[0]) btn.childNodes[0].nodeValue=rem+"s ";
+    if(elapsed>=COOLDOWN_MS){
+      clearInterval(cdTimers[id]);
+      btn.classList.remove("on-cooldown"); btn.disabled=(stock[id]??0)===0;
+      if(btn.childNodes[0]) btn.childNodes[0].nodeValue="RETIRAR";
+      bar.style.width="0"; delete cooldowns[id];
+    }
+  },500);
 }
 
 function refreshCard(id) {
-  const a = ALL_AMNESTICS.find(x => x.id === id);
-  const qty = stock[id] ?? 0;
-  const stockClass = qty === 0 ? "stock-empty" : qty <= 5 ? "stock-warn" : "stock-ok";
-  const stockLabel = qty === 0 ? "SEM ESTOQUE" : `${qty} ${a.unit}`;
-
-  const shelf = document.getElementById("shelf-" + id);
-  if (shelf) {
-    const MAX_VIALS = 30;
-    let vialsHTML = "";
-    if (qty === 0) {
-      vialsHTML = `<div class="empty-shelf">— VAZIO —</div>`;
-    } else {
-      const show = Math.min(qty, MAX_VIALS);
-      for (let i = 0; i < show; i++) {
-        vialsHTML += `<div class="vial" style="background:${a.color};border-color:${a.stripe};"></div>`;
-      }
-      if (qty > MAX_VIALS) {
-        vialsHTML += `<div style="font-size:10px;color:#555;align-self:center;padding-left:4px">+${qty - MAX_VIALS} mais</div>`;
-      }
-    }
-    shelf.innerHTML = vialsHTML + `<div class="shelf-dividers"></div>`;
+  const a=ALL_ITEMS.find(x=>x.id===id); if(!a) return;
+  const qty=stock[id]??0;
+  const sc=qty===0?"stock-empty":qty<=5?"stock-warn":"stock-ok";
+  const sl=qty===0?"SEM ESTOQUE":`${qty} ${a.unit}`;
+  const shelf=document.getElementById("shelf-"+id);
+  if(shelf){
+    const MAX=30; let v="";
+    if(qty===0) v=`<div class="empty-shelf">— VAZIO —</div>`;
+    else{const n=Math.min(qty,MAX);for(let i=0;i<n;i++)v+=`<div class="vial" style="background:${a.color};border-color:${a.stripe};"></div>`;if(qty>MAX)v+=`<div style="font-size:10px;color:#555;align-self:center;padding-left:4px">+${qty-MAX} mais</div>`;}
+    shelf.innerHTML=v+`<div class="shelf-dividers"></div>`;
   }
-
-  const card = document.getElementById("card-" + id);
-  if (card) {
-    const countEl = card.querySelector(".stock-count");
-    if (countEl) {
-      countEl.textContent = stockLabel;
-      countEl.className = "stock-count " + stockClass;
-    }
-    const btn = document.getElementById("btn-" + id);
-    if (btn) btn.disabled = qty === 0;
-    const inp = document.getElementById("qty-" + id);
-    if (inp) inp.max = qty;
-  }
+  const lbl=document.getElementById("sl-"+id); if(lbl){lbl.textContent=sl;lbl.className="stock-count "+sc;}
+  const inp=document.getElementById("qty-"+id); if(inp) inp.max=qty;
 }
 
 function renderAdminRestock() {
-  const grid = document.getElementById("restock-grid");
-  if (!grid) return;
-  grid.innerHTML = ALL_AMNESTICS.map(a => {
-    const qty = stock[a.id] ?? 0;
-    return `
-    <div class="restock-row">
-      <div class="restock-label">
-        <strong style="color:${a.stripe}">${a.name}</strong>
-        <span>${qty} ${a.unit} atual</span>
-      </div>
-      <input class="restock-input" type="number" min="1" value="10" id="restock-qty-${a.id}">
+  const grid=document.getElementById("restock-grid"); if(!grid) return;
+  grid.innerHTML=ALL_ITEMS.map(a=>{
+    const qty=stock[a.id]??0;
+    const tag=a.fatal?`<span style="color:#ff4444;font-size:10px">[FATAL] </span>`:"";
+    return `<div class="restock-row">
+      <div class="restock-label">${tag}<strong style="color:${a.stripe}">${a.name}</strong><span>${qty} ${a.unit} atual</span></div>
+      <input class="restock-input" type="number" min="1" value="10" id="rq-${a.id}">
       <button class="restock-btn" onclick="doRestock('${a.id}')">+Adicionar</button>
     </div>`;
   }).join("");
 }
 
 function doRestock(id) {
-  const a = ALL_AMNESTICS.find(x => x.id === id);
-  const inp = document.getElementById("restock-qty-" + id);
-  let qty = parseInt(inp.value);
-  if (!qty || qty < 1) { showToast("Quantidade inválida.", "err"); return; }
-  stock[id] = (stock[id] ?? 0) + qty;
-  saveStock();
-  renderAdminRestock();
-  renderShelves();
-  if (ennuiUnlocked) renderEnnuiShelves();
-  addLog("admin", currentUser, `Re-estocou ${qty} ${a.unit} de ${a.name}`);
-  showToast(`+${qty} ${a.unit} adicionados a ${a.name}`, "ok");
+  const a=ALL_ITEMS.find(x=>x.id===id); if(!a) return;
+  const v=parseInt(document.getElementById("rq-"+id).value);
+  if(!v||v<1){showToast("Quantidade inválida.","err");return;}
+  stock[id]=(stock[id]??0)+v;
+  saveGlobalStock(); renderAdminRestock(); renderAll();
+  addLog("admin",currentUser,`Re-estocou ${v} ${a.unit} de ${a.name}`);
+  showToast(`+${v} ${a.unit} adicionados a ${a.name}`,"ok");
 }
 
 function refreshLog() {
-  const tbody = document.getElementById("log-body");
-  if (!tbody) return;
-  if (accessLog.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="3" style="color:#333;text-align:center;padding:20px;font-size:11px;text-transform:uppercase;letter-spacing:2px;">Nenhum registro</td></tr>`;
-    return;
+  const tbody=document.getElementById("log-body"); if(!tbody) return;
+  if(accessLog.length===0){
+    tbody.innerHTML=`<tr><td colspan="3" style="color:#333;text-align:center;padding:20px;font-size:11px;text-transform:uppercase;letter-spacing:2px">Nenhum registro</td></tr>`;return;
   }
-  tbody.innerHTML = accessLog.map(e => {
-    let cls, icon;
-    switch(e.type) {
-      case "enter": cls = "log-enter"; icon = "✅"; break;
-      case "take":  cls = "log-take";  icon = "📦"; break;
-      case "fail":  cls = "log-fail";  icon = "❌"; break;
-      case "admin": cls = "log-admin"; icon = "⚙";  break;
-      default: cls = ""; icon = "•";
-    }
-    return `<tr>
-      <td class="log-time">${e.time}</td>
-      <td style="font-weight:700">${e.user}</td>
-      <td class="${cls}">${icon} ${e.detail}</td>
-    </tr>`;
+  const map={enter:["log-enter","✅"],take:["log-take","📦"],fail:["log-fail","❌"],admin:["log-admin","⚙"],ennui:["log-ennui","⚠"]};
+  tbody.innerHTML=accessLog.map(e=>{
+    const [cls,icon]=map[e.type]||["","•"];
+    return `<tr><td class="log-time">${e.time}</td><td style="font-weight:700">${e.user}</td><td class="${cls}">${icon} ${e.detail}</td></tr>`;
   }).join("");
 }
 
 function clearLog() {
-  if (!confirm("Limpar todo o histórico?")) return;
-  accessLog = [];
-  saveStock();
-  refreshLog();
+  if(!confirm("Limpar todo o histórico?")) return;
+  accessLog=[]; saveLocalLog(); refreshLog();
 }
 
 initStock();
 </script>
-
-
-</body></html>
+</body>
+</html>
